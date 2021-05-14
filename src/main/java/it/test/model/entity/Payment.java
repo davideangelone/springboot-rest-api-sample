@@ -1,15 +1,33 @@
 package it.test.model.entity;
 
+import java.util.Base64;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+
 import it.test.utils.SHA;
 
+@Entity
+@Table(name = "payment")
 public class Payment {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	private long timestamp;
+	private Date timestamp;
 	
+	@Column(name = "tipo", nullable = false)
 	private String tipo;
 	
+	@Column(name = "importo", nullable = false)
 	private int importo;
 	
 	private String hash;
@@ -20,10 +38,10 @@ public class Payment {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 	public String getTipo() {
@@ -41,8 +59,12 @@ public class Payment {
 	public String getHash() {
 		return hash;
 	}
+	
+	@PrePersist
+	@PreUpdate
 	public void generateHash() {
-		this.hash = SHA.generateHash(this.id + this.timestamp + this.tipo + this.importo);
+		this.timestamp = new Date();
+		this.hash = Base64.getEncoder().encodeToString(SHA.generateHash(timestamp.toString() + this.tipo + this.importo));
 	}
 	
 }

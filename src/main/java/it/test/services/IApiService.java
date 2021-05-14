@@ -9,6 +9,10 @@ public interface IApiService {
 
 	public List<PaymentResponse> getPayments();
 	
+	public PaymentResponse getPayment(int id);
+	
 	public void addPayment(PaymentRequest payment);
+	
+	void deletePayment(int it);
 	
 }

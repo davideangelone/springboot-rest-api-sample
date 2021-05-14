@@ -6,14 +6,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,10 +23,6 @@ import it.test.model.request.PaymentRequest;
 import it.test.model.response.PaymentResponse;
 import it.test.services.IApiService;
 
-/**
- *
- * A sample greetings controller to return greeting text
- */
 @RestController
 @RequestMapping("/api")
 public class ApiController {
@@ -35,16 +31,36 @@ public class ApiController {
 	IApiService service;
 	
     /**
-     * @return lista pagamenti
+     * Rstituisce la lista di tutti i pagamenti
      */
-    @GetMapping("/list")
-    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/get")
     public ResponseEntity<List<PaymentResponse>> getPayments() {
-        return ResponseEntity.ok(service.getPayments());
+        return ResponseEntity.ok(this.service.getPayments());
     }
     
+    /**
+     * Restituisce un pagamento
+     * 
+     * @param id del pagamento
+     * @return pagamento
+     */
+    @GetMapping("/get/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "401", description = "Pagamento non trovato")
+        })
+    public ResponseEntity<PaymentResponse> getPayment(@PathVariable("id") int id) {
+        return ResponseEntity.ok(this.service.getPayment(id));
+    }
+    
+    /**
+     * Inserisce un pagamento
+     * 
+     * @param payment
+     * @param errors
+     * @return
+     */
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.OK)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "400", description = "Input non valido")
@@ -56,7 +72,23 @@ public class ApiController {
     		return ResponseEntity.badRequest().body(errs);
     	}
     	
-    	service.addPayment(payment);
+    	this.service.addPayment(payment);
+    	return ResponseEntity.ok().build();
+    }
+    
+    /**
+     * Cancella un pagamento
+     * 
+     * @param id del pagamento
+     * @return pagamento
+     */
+    @DeleteMapping("/delete/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "401", description = "Pagamento non trovato")
+        })
+    public ResponseEntity<?> deletePayment(@PathVariable("id") int id) {
+    	this.service.deletePayment(id);
     	return ResponseEntity.ok().build();
     }
 }

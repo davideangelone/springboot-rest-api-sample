@@ -1,30 +1,24 @@
 package it.test.model.response;
 
-import it.test.model.entity.Payment;
+import java.util.Date;
 
 public class PaymentResponse {
 	
 	private int id;
-	private long timestamp;
+	private Date timestamp;
 	private String tipo;
 	private int importo;
 	
-	public PaymentResponse(Payment payment) {
-		this.id = payment.getId();
-		this.timestamp = payment.getTimestamp();
-		this.tipo = payment.getTipo();
-		this.importo = payment.getImporto();
-	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 	public String getTipo() {
