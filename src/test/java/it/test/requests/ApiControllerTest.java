@@ -38,7 +38,7 @@ public class ApiControllerTest {
     @Test
     @Order(1)
     public void testEmptyList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/list"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/get"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(content().string("[]"));
     }
@@ -62,7 +62,7 @@ public class ApiControllerTest {
     @Test
     @Order(3)
     public void testFullList() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/list"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/get"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(jsonPath("$.length()").value(1));
     }
