@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.test.model.error.Errore;
@@ -47,7 +49,7 @@ public class ApiController {
     @GetMapping("/get/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "401", description = "Pagamento non trovato")
+            @ApiResponse(responseCode = "404", description = "Pagamento non trovato")
         })
     public ResponseEntity<PaymentResponse> getPayment(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.service.getPayment(id));
@@ -63,7 +65,8 @@ public class ApiController {
     @PostMapping("/add")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "400", description = "Input non valido")
+            @ApiResponse(responseCode = "400", description = "Input non valido", 
+            	content = @Content(schema = @Schema(implementation = Errore.class)))
         })
     public ResponseEntity<?> addPayment(@Valid @RequestBody PaymentRequest payment, Errors errors) {
     	if (errors.hasErrors()) {
@@ -85,7 +88,7 @@ public class ApiController {
     @DeleteMapping("/delete/{id}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "401", description = "Pagamento non trovato")
+            @ApiResponse(responseCode = "404", description = "Pagamento non trovato")
         })
     public ResponseEntity<?> deletePayment(@PathVariable("id") int id) {
     	this.service.deletePayment(id);
