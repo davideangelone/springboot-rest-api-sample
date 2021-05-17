@@ -1,19 +1,18 @@
 package it.test.model.request;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+
+import it.test.model.validator.PaymentType;
 
 public class PaymentRequest {
 	
-	@NotBlank(message = "Tipo obbligatorio")
-	@Pattern(regexp = "^(cash)|(bonifico)|(carta)$", message="Tipo deve essere uno tra: cash, bonifico, carta")
+	@PaymentType()
 	private String tipo;
 	
 	@NotNull(message = "Importo obbligatorio")
-	@Positive(message = "Importo deve essere positivo")
-	private int importo;
+	@Digits(fraction = 0, integer = 20, message = "Importo deve essere un intero positivo")
+	private String importo;
 	
 	public String getTipo() {
 		return tipo;
@@ -21,10 +20,10 @@ public class PaymentRequest {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public int getImporto() {
+	public String getImporto() {
 		return importo;
 	}
-	public void setImporto(int importo) {
+	public void setImporto(String importo) {
 		this.importo = importo;
 	}
 	

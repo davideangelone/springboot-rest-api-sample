@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import it.test.utils.SHA;
 
 @Entity
-@Table(name = "payment")
+@Table
 public class Payment {
 	
 	@Id
