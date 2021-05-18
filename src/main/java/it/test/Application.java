@@ -8,10 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
-/**
- *
- * Spring Boot application starter class
- */
 @SpringBootApplication
 @OpenAPIDefinition(
         info = @Info(title = "Test Rest Api Application", version = "1.0.0")

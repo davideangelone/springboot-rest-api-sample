@@ -34,70 +34,131 @@ public class ApiControllerTest {
     }
 
     /**
-     * Test for list with 3 elements
+     * Test for payments list
      */
     @Test
     @Order(1)
-    public void testList3Elements() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/get"))
+    public void testListPayments() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/payment/get"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(jsonPath("$.length()").value(3));
     }
     
     /**
-     * Test for adding item
+     * Test for adding user (OK)
      */
     @Test
     @Order(2)
-    public void testAdd() throws Exception {
+    public void testAddUserOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-        		.post("/api/add")
+        		.post("/user/add")
         		.contentType(MediaType.APPLICATION_JSON_VALUE)
-        		.content("{ \"tipo\" : \"cash\", \"importo\" : \"123\" }"))
-            .andExpect(MockMvcResultMatchers.status().isOk());
+        		.content("{ \"username\" : \"testuser2\", \"email\" : \"test@test.it\" }"))
+            .andExpect(MockMvcResultMatchers.status().isCreated());
     }
     
     /**
-     * Test for getting item
+     * Test for adding user (KO)
      */
     @Test
     @Order(3)
-    public void testGet100() throws Exception {
+    public void testAddUserKo() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-        		.get("/api/get/100"))
+        		.post("/user/add")
+        		.contentType(MediaType.APPLICATION_JSON_VALUE)
+        		.content("{ \"username\" : \"testuser2\", \"email\" : \"test@test.it\" }"))
+            .andExpect(MockMvcResultMatchers.status().isConflict());
+    }
+    
+    /**
+     * Test for adding payment (OK)
+     */
+    @Test
+    @Order(4)
+    public void testAddPayment() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+        		.post("/payment/add")
+        		.contentType(MediaType.APPLICATION_JSON_VALUE)
+        		.content("{ \"tipo\" : \"cash\", \"importo\" : \"123\", \"username\" : \"testuser2\" }"))
+            .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+    
+    /**
+     * Test for adding payment (KO)
+     */
+    @Test
+    @Order(5)
+    public void testAddPaymentKo() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+        		.post("/payment/add")
+        		.contentType(MediaType.APPLICATION_JSON_VALUE)
+        		.content("{ \"tipo\" : \"cash\", \"importo\" : \"123\", \"username\" : \"userNotFound\" }"))
+            .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+    
+    /**
+     * Test for getting payment (OK)
+     */
+    @Test
+    @Order(6)
+    public void testGetPaymentOk() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+        		.get("/payment/get/100"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(content().string(containsString("98765")));
     }
     
     /**
-     * Test for list after insert
+     * Test for getting payment (KO)
      */
     @Test
-    @Order(4)
-    public void testListAfterInsert() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/get"))
+    @Order(7)
+    public void testGetPaymentKo() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+        		.get("/payment/get/999"))
+            .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+    
+    /**
+     * Test for payment list after insert
+     */
+    @Test
+    @Order(8)
+    public void testPaymentListAfterInsert() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/payment/get"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(jsonPath("$.length()").value(4));
     }
     
     /**
-     * Test for deleting item
+     * Test for deleting payment (OK)
      */
     @Test
-    @Order(5)
-    public void testDelete() throws Exception {
+    @Order(9)
+    public void testDeletePaymentOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-        		.delete("/api/delete/1"))
+        		.delete("/payment/delete/100"))
             .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+    
+    /**
+     * Test for deleting payment (KO)
+     */
+    @Test
+    @Order(10)
+    public void testDeletePaymentKo() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+        		.delete("/payment/delete/999"))
+            .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
     
     /**
      * Test for list after delete
      */
     @Test
-    @Order(6)
+    @Order(11)
     public void testListAfterDelete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/get"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/payment/get"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(jsonPath("$.length()").value(3));
     }
