@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import it.test.exception.ResourceNotFoundException;
 import it.test.model.entity.Payment;
 import it.test.model.request.PaymentRequest;
+import it.test.model.response.PaymentReport;
 import it.test.model.response.PaymentResponse;
 import it.test.repository.PaymentRepository;
 import it.test.repository.UserRepository;
@@ -31,6 +32,20 @@ public class PaymentService implements IPaymentService {
 	public List<PaymentResponse> getPayments() {
 		return StreamSupport.stream(this.paymentRepository.findAll().spliterator(), false)
 				.map(from -> mapperDozer.map(from, PaymentResponse.class))
+				.collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<PaymentResponse> getPaymentsByUsername(String username) {
+		return StreamSupport.stream(this.paymentRepository.findAllByUsername(username).spliterator(), false)
+				.map(from -> mapperDozer.map(from, PaymentResponse.class))
+				.collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<PaymentReport> getPaymentsReportByUsername(String username) {
+		return StreamSupport.stream(this.paymentRepository.getPaymentsReportByUsername(username).spliterator(), false)
+				.map(from -> mapperDozer.map(from, PaymentReport.class))
 				.collect(Collectors.toList());
 	}
 	

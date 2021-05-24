@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.test.model.error.Errore;
 import it.test.model.request.PaymentRequest;
+import it.test.model.response.PaymentReport;
 import it.test.model.response.PaymentResponse;
 import it.test.services.IPaymentService;
 import it.test.services.IUserService;
@@ -58,6 +59,34 @@ public class PaymentController {
         })
     public ResponseEntity<PaymentResponse> getPayment(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.paymentService.getPayment(id));
+    }
+    
+    /**
+     * Restituisce tutti i pagamenti di un utente
+     * 
+     * @param username
+     * @return lista dei pagamenti
+     */
+    @GetMapping("/user/all/{username}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+        })
+    public ResponseEntity<List<PaymentResponse>> getUserPayments(@PathVariable("username") String username) {
+        return ResponseEntity.ok(this.paymentService.getPaymentsByUsername(username));
+    }
+    
+    /**
+     * Restituisce un report dei pagamenti di un utente
+     * 
+     * @param username
+     * @return report dei pagamenti
+     */
+    @GetMapping("/user/report/{username}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+        })
+    public ResponseEntity<List<PaymentReport>> getPaymentsReportByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.ok(this.paymentService.getPaymentsReportByUsername(username));
     }
     
     /**
