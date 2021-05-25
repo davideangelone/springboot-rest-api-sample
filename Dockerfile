@@ -3,7 +3,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 RUN apk add --no-cache bash
 USER spring:spring
 ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5859
-ARG JAR_FILE=target/*.jar
+ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
 
 EXPOSE 8000:8000

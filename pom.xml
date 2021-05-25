@@ -18,6 +18,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
   </properties>
 
   <dependencies>
@@ -111,7 +112,7 @@
              </executions>
              <configuration>
              	 <repository>${project.artifactId}</repository>
-                 <tag>${project.version}</tag>
+                 <tag>${maven.build.timestamp}</tag>
 				 <buildArgs>
 					<JAR_FILE>target/*.jar</JAR_FILE>
 				 </buildArgs>
