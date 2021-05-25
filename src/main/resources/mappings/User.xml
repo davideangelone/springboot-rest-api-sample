@@ -7,6 +7,10 @@
         <class-a>it.test.model.entity.User</class-a>
         <class-b>it.test.model.response.UserResponse</class-b>
         <field>
+            <a>userId</a>
+            <b>id</b>
+        </field>
+        <field>
             <a>username</a>
             <b>username</b>
         </field>

@@ -7,6 +7,10 @@
         <class-a>it.test.model.entity.Payment</class-a>
         <class-b>it.test.model.response.PaymentResponse</class-b>
         <field>
+            <a>paymentId</a>
+            <b>id</b>
+        </field>
+        <field>
             <a>tipo</a>
             <b>tipo</b>
         </field>
