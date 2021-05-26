@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+    container:
+        build:
+            context: .
+            args:
+                JAR_FILE: ${JAR_FILE}
+            dockerfile: Dockerfile
+        ports:
+            - 8989:8000
+        env_file:
+            - .env

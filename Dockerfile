@@ -6,6 +6,6 @@ ENV JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,addr
 ARG JAR_FILE
 COPY ${JAR_FILE} app.jar
 
-EXPOSE 8000:8000
+EXPOSE 8000
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
