@@ -14,13 +14,13 @@ import it.test.model.response.IPaymentReport;
 public interface PaymentRepository extends CrudRepository<Payment, Integer> {
 	
 	@Query(value = "select PAYMENT.* from " +
-				   "PAYMENT join USER " +
-				   "on PAYMENT.USER_ID = USER.USER_ID " +
-				   "WHERE USER.USERNAME = :username", nativeQuery = true)
+				   "PAYMENT P join UTENTE U " +
+				   "on P.USER_ID = U.USER_ID " +
+				   "WHERE U.USERNAME = :username", nativeQuery = true)
 	public List<Payment> findAllByUsername(@Param("username") String username);
 	
-	@Query(value = "select PAYMENT.TIPO as tipo, sum(PAYMENT.IMPORTO) as importoTotale, count(PAYMENT.*) as numeroPagamenti " +
-			   "from PAYMENT join USER on PAYMENT.USER_ID = USER.USER_ID WHERE USER.USERNAME = :username " +
+	@Query(value = "select P.TIPO as tipo, sum(P.IMPORTO) as importoTotale, count(P.*) as numeroPagamenti " +
+			   "from PAYMENT P join UTENTE U on P.USER_ID = U.USER_ID WHERE U.USERNAME = :username " +
 			   "group BY TIPO", nativeQuery = true)
 	public List<IPaymentReport> getPaymentsReportByUsername(@Param("username") String username);
 	
