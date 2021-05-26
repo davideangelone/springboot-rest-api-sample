@@ -17,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.TestPropertySource;
 
 import it.test.model.entity.User;
 import it.test.model.request.UserRequest;
@@ -25,6 +26,7 @@ import it.test.repository.UserRepository;
 import it.test.services.UserService;
 
 @ExtendWith(MockitoExtension.class)
+@TestPropertySource(locations = {"classpath:application-test.properties"})
 public class ApiControllerUnitTestService {
 	
 	@InjectMocks

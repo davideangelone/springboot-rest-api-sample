@@ -15,12 +15,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 
 import it.test.controllers.UserController;
 import it.test.model.response.UserResponse;
 import it.test.services.UserService;
 
 @ExtendWith(MockitoExtension.class)
+@TestPropertySource(locations = {"classpath:application-test.properties"})
 public class ApiControllerUnitTestController {
 	
 	@InjectMocks
