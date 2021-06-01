@@ -138,14 +138,16 @@
              <executions>
                  <execution>
                      <id>default</id>
+                     <phase>package</phase>
                      <goals>
-                         <goal>build</goal>
+                         <goal>build</goal> <!-- build image to local docker -->
+                         <goal>push</goal> <!-- push image to docker hub -->
                      </goals>
                  </execution>
              </executions>
              <configuration>
              	 <contextDirectory>.</contextDirectory>
-             	 <repository>${jar.filename}</repository>
+             	 <repository>davideangelone/rest-api-application</repository>
              	 <!--
                  <tag>${maven.build.timestamp}</tag>
                  -->

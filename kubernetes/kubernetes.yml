@@ -1,0 +1,32 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: rest-api-application-service-loadbalancer
+spec:
+  ports:
+    - protocol: TCP
+      port: 8200
+      targetPort: 8000
+  selector:
+    app: rest-api-application-deployment
+  type: LoadBalancer
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rest-api-application-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rest-api-application-deployment
+  template:
+    metadata:
+      labels:
+        app: rest-api-application-deployment
+    spec:
+      containers:
+        - name: rest-api-application
+          image: davideangelone/rest-api-application
+          ports:
+            - containerPort: 8000

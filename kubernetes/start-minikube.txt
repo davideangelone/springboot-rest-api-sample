@@ -1,0 +1,11 @@
+Start minikube:
+minikube start
+(also "minikube start --driver hyperv" or "minikube start --driver ssh")
+
+
+Dashboard:
+minikube dashboard
+
+
+Start tunnel (for LoadBalanced services):
+minikube tunnel
