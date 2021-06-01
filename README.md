@@ -1,4 +1,10 @@
 # springboot-rest-api-sample
 REST Api Sample
 
-Let add, list, get and delete sample payments.
+Simple application for managing users and payments.
+
+Features:
+- Spring Boot
+- Spring Data
+- AOP
+- Docker
