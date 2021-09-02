@@ -141,7 +141,7 @@
                      <phase>package</phase>
                      <goals>
                          <goal>build</goal> <!-- build image to local docker -->
-                         <goal>push</goal> <!-- push image to docker hub -->
+                         <!-- <goal>push</goal> --> <!-- push image to docker hub -->
                      </goals>
                  </execution>
              </executions>
